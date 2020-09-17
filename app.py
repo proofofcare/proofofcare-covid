@@ -32,18 +32,32 @@ app.config.suppress_callback_exceptions = True
 server = app.server
 app.title = "Proof of Care - Covid Dashboard"
 
-covid_graph = go.Figure(go.Scatter(x = pd.to_datetime(covid_count.index).sort_values(), y = covid_count.HA))
+covid_graph = go.Figure(go.Scatter(x = pd.to_datetime(covid_count.index).sort_values(), y = covid_count.HA,
+    marker = dict(color='#01AEEF')))
 covid_graph.update_layout(
     title ="Daily Covid Cases in BC",
     paper_bgcolor = 'white',
     plot_bgcolor ='white',
-
-
 )
+
+z = df.groupby(by = ['Sex','Age_Group']).count()
+
+age_sex_bar = go.Figure(data = [
+    go.Bar(name = 'M', x = df.Age_Group.unique(), y = z.HA, marker = dict(color = '#3D9BE9')),
+    go.Bar(name = 'F', x = df.Age_Group.unique(), y = z.HA, marker = dict(color = '#3FE3D1'))
+    ])
+age_sex_bar.update_layout(
+    barmode='stack',
+    title = 'Age and Sex for Covid Cases',
+    paper_bgcolor = 'white',
+    plot_bgcolor = 'white'
+    )
 
 app.layout = html.Div([
     html.Div([
-        html.H1("Proof of Care - B.C. COVID -19 update",)
+        html.H1("Proof of Care - B.C. COVID -19 update", style = {
+            'font-family':'fantasy'
+        })
     ]),
     html.Div(
         className ='boxes_container',
@@ -51,7 +65,7 @@ app.layout = html.Div([
             html.Div(
                 className = "update_boxes",
                 children = [
-                    html.P('Data Updated up to: {}' .format(most_recent))
+                    html.P('Data Updated for: {}' .format(most_recent))
             ]),
             html.Div(
                 className = 'update_boxes',
@@ -61,25 +75,49 @@ app.layout = html.Div([
             html.Div(
                 className ='update_boxes',
                 children = [
-                    html.P("Cases, One Week Trend: {}" .format(one_week_trend))
+                    html.P("Cases for Past Week: {}" .format(one_week_trend))
             ]),
             html.Div(
-                className = 'update_boxes',
+                className = 'last_update_box',
                 children = [
                     html.P('Number of Active Cases in BC: {}' .format(BC_active_cases))]),
+    ], style = {'font-family':'Lucida Grande', 'font-weight':'bold',
+        'font-size':18,'color':'#878787'}),
+    html.Div(
+        className = 'daily_cases_container',
+        children = [
+            dcc.Graph(
+                className = "daily_cases",
+                figure = covid_graph),
     ]),
-    dcc.Graph(
-        className = "daily_cases",
-        figure = covid_graph),
-    ### for this I want active cases and total cases displayed as a radioitem
-    dcc.RadioItems(
-        className = 'radioitem_active_total',
-        id = 'active_total_radioitem',
-        options = [{'label':i, 'value':i} for i in ['Total COVID-19 Cases','Active Cases']],
-        value = 'Active Cases'),
-    dcc.Graph(
-        className = 'active_total_cases',
-        id = 'active_total_graph')
+    html.Div(
+        className = "radioitem_container",
+        children = [
+            dcc.RadioItems(
+                className = 'radioitem_active_total',
+                id = 'active_total_radioitem',
+                options = [{'label':i, 'value':i} for i in ['Active Cases', 'Total COVID-19 Cases']],
+                value = 'Active Cases'),
+        ]),
+    html.Div(
+        className = 'bot_graph_container',
+        children = [
+            html.Div(
+                className = "active_total_container",
+                children = [
+                    dcc.Graph(
+                        className = 'active_total_cases',
+                        id = 'active_total_graph'),
+                    ]),
+            html.Div(
+                className = "sex_age_container",
+                children = [
+                    dcc.Graph(
+                        className = "sex_age",
+                        figure = age_sex_bar
+                        )
+                    ]),
+    ]),
 ])
 
 @app.callback(
@@ -93,7 +131,6 @@ def active_total_graph_render(activeortotal):
         title = (activeortotal + ' for Health Authorities in BC')
     )
     return fig
-
 
 if __name__ =='__main__':
     app.run_server(debug = True)

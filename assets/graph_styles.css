@@ -1,31 +1,96 @@
 body {
   margin:0;
-}
-
-
-.update_boxes {
-  padding:9% 0 9% 0;
-  margin:5px;
-  text-align: center;
-  border-style:solid;
-  border-width: 5px;
-  border-color: #01AEEF;
+  background-color:#f7f7f7;
 }
 
 .boxes_container {
   float:left;
+  width:20%;
+  margin:0 2% 0 2%;
+}
+
+.update_boxes {
+  padding:10% 0 9% 0;
+  margin: 0 0 4% 0;
+  text-align: center;
+  background-color: white;
+}
+
+.last_update_box {
+  padding:10% 0 9% 0;
+  margin: 0;
+  text-align: center;
+  border-width: 5px;
+  background-color: white;
+}
+
+.daily_cases_container {
+  float:left;
+  width:73%;
+  background-color:white;
 }
 
 .daily_cases {
-  float:left;
-  width:75%;
+  background-color: white;
+
 }
-.active_total_cases {
+
+.radioitem_container {
+  margin:2% 0 0 2%;
   float:left;
-  width:90%;
+  padding:0
 }
 
 .radioitem_active_total {
-  padding-top: 5%;
-  float: left;
+  float:left;
 }
+
+.bot_graph_container {
+  width:100%;
+  margin:2%;
+  float:left;
+}
+
+.active_total_container {
+  float:left;
+  width:48%;
+}
+
+.active_total_cases {
+  margin-right:2%;
+}
+
+.sex_age_container {
+    width:48%;
+    float:left;
+}
+
+.sex_age {
+  margin:0 2% 0 2%;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**/
