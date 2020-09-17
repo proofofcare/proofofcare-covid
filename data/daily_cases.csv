@@ -1,0 +1,7 @@
+﻿FID,HA_ID,Health Authority,Health Authority Population,Recovered,Deaths,COVID-19 Cases,Update Date,Source,Source URL,GlobalID,Shape__Area,Shape__Length,Total Hospitalized to Date,Currently Hospitalized,Total Admitted to ICU to Date,Currently Admitted to ICU,New Cases (Last 24h),Laboratory Cases,EpiCases,Active Cases
+1,IHA,Interior,739989,458,2,479,9/15/2020 11:30:00 PM,"BCCDC, B.C. Ministry of Health, PHSA",,b9825972-7c9f-40e5-94fd-35c56588e5de,213501864648.97,2865217.22416581,36,1,0,0,6,453,26,19
+2,FHA,Fraser,1720066,3012,99,3784,9/15/2020 11:30:00 PM,"BCCDC, B.C. Ministry of Health, PHSA",,3b1e1b29-f3a8-42f5-914e-d0ee33e34d53,15721774846.5239,749159.184987523,362,28,0,5,30,3744,40,655
+3,VCHA,Vancouver Coastal,1131705,1632,112,2608,9/15/2020 11:30:00 PM,"BCCDC, B.C. Ministry of Health, PHSA",,248e87c0-f5c5-4f29-91dd-8b8b5be29b2c,54811863603.9555,7491881.05552365,223,26,0,8,51,2582,26,864
+4,VIHA,Vancouver Island,776410,178,5,195,9/15/2020 11:30:00 PM,"BCCDC, B.C. Ministry of Health, PHSA",,6570c056-d65a-447b-a032-6ccdbad673bb,55395501277.8047,8865158.03273432,25,0,0,0,0,191,4,12
+5,NHA,Northern,279885,191,1,225,9/15/2020 11:30:00 PM,"BCCDC, B.C. Ministry of Health, PHSA",,b87ca1f6-bb80-4698-adef-eb518657009f,630450943608.177,11868367.7482869,24,7,0,7,9,214,11,33
+6,,Out of Canada,,77,0,85,9/15/2020 11:30:00 PM,"BCCDC, B.C. Ministry of Health, PHSA",,ca21891b-790f-429f-92e3-f927b19cab77,172675806.693726,52598.7173549671,5,1,0,0,1,84,1,7
