@@ -29,6 +29,7 @@ one_week_trend = covid_count.Sex.tail(7).sum()
 
 app = dash.Dash(__name__)
 app.config.suppress_callback_exceptions = True
+server = app.server
 app.title = "Proof of Care - Covid Dashboard"
 
 covid_graph = go.Figure(go.Scatter(x = pd.to_datetime(covid_count.index).sort_values(), y = covid_count.HA))
