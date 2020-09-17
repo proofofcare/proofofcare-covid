@@ -38,6 +38,10 @@ covid_graph.update_layout(
     title ="Daily Covid Cases in BC",
     paper_bgcolor = 'white',
     plot_bgcolor ='white',
+    xaxis = dict(
+        title = "Time"),
+    yaxis =dict(
+        title = "New Cases")
 )
 
 z = df.groupby(by = ['Sex','Age_Group']).count()
@@ -48,9 +52,13 @@ age_sex_bar = go.Figure(data = [
     ])
 age_sex_bar.update_layout(
     barmode='stack',
-    title = 'Age and Sex for Covid Cases',
+    title = 'Age and Sex Relationship for Covid Cases',
     paper_bgcolor = 'white',
-    plot_bgcolor = 'white'
+    plot_bgcolor = 'white',
+    xaxis = dict(
+        title  = 'Age Group'),
+    yaxis = dict(
+        title = 'COVID Cases')
     )
 
 app.layout = html.Div([
