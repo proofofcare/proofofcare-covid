@@ -1,15 +1,12 @@
 What we want from this dashboard
 
-
-daily cases (most recent)
-
+Update date
+daily cases
+cases for past week
 active cases
 
-changes in daily cases
+add slider for time series
 
-changes in active cases
-
-1 week trend for active cases
 
 
 
@@ -43,7 +40,7 @@ proof of care colours: from darkest to lighest
 #3D9BE9
 #01AEEF		This is the primary colour
 #3FE3D1
-
+['#01AEEF','#3D9BE9', '#3FE3D1', ]
 
 text color
 
