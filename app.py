@@ -15,7 +15,7 @@ gis = GIS();
 item = gis.content.get("f7d1318260b14ac2b334e81e55ee5c9e#data");
 flayer = item.layers[0];
 daily_df = pd.DataFrame.spatial.from_layer(flayer);
-daily_df.rename(columns = {'Cases':'Total Cases', 'ActiveCases':'Active Cases', 'HA_Name':'Health Authority'}, inplace = True)
+daily_df.rename(columns = {'Cases':'Total Cases', 'ActiveCases':'Active Cases', 'HA_Name':'Health Authority', 'Recovered':'Recovered Cases'}, inplace = True)
 
 df = pd.read_csv("http://www.bccdc.ca/Health-Info-Site/Documents/BCCDC_COVID19_Dashboard_Case_Details.csv")
 df.rename(columns = {"Reported_Date":"Reported Date"}, inplace = True)
@@ -27,10 +27,12 @@ daily_covid_cases = covid_count.iloc[-1][0]
 BC_active_cases = daily_df['Active Cases'].sum()
 one_week_trend = covid_count.Sex.tail(7).sum()
 
+ordered_age_group = ['<10','10-19','20-29','30-39','40-49','50-59','60-69','70-79','80-89','90+','Unknown']
+
 app = dash.Dash(__name__)
 app.config.suppress_callback_exceptions = True
 server = app.server
-app.title = "Proof of Care - Covid Dashboard"
+app.title = "Proof of Care - COVID Dashboard"
 
 covid_graph = go.Figure(
     go.Scatter(
@@ -54,12 +56,12 @@ covid_graph.update_layout(
 z = df.groupby(by = ['Sex','Age_Group']).count()
 
 age_sex_bar = go.Figure(data = [
-    go.Bar(name = 'M', x = df.Age_Group.unique(), y = z.HA, marker = dict(color = '#3D9BE9')),
-    go.Bar(name = 'F', x = df.Age_Group.unique(), y = z.HA, marker = dict(color = '#3FE3D1'))
+    go.Bar(name = 'M', x = ordered_age_group, y = z.HA, marker = dict(color = '#3D9BE9')),
+    go.Bar(name = 'F', x = ordered_age_group, y = z.HA, marker = dict(color = '#3FE3D1'))
     ])
 age_sex_bar.update_layout(
     barmode='stack',
-    title = 'Age and Sex Relationship for Covid Cases',
+    title = 'Age, Sex and COVID Cases',
     paper_bgcolor = 'white',
     plot_bgcolor = 'white',
     xaxis = dict(
@@ -70,7 +72,7 @@ age_sex_bar.update_layout(
 
 app.layout = html.Div([
     html.Div([
-        html.H1("Proof of Care - B.C. COVID -19 update", style = {
+        html.H1("Proof of Care - B.C. COVID -19 Update", style = {
             'font-family':'fantasy'
         })
     ]),
@@ -94,7 +96,7 @@ app.layout = html.Div([
             html.Div(
                 className = "update_boxes",
                 children = [
-                    html.P("Total Recovered: {}" .format(daily_df.Recovered.sum()))
+                    html.P("Total Recovered: {}" .format(daily_df['Recovered Cases'].sum()))
                 ]
             ),
             html.Div(
@@ -117,7 +119,7 @@ app.layout = html.Div([
             dcc.RadioItems(
                 className = 'radioitem_active_total',
                 id = 'active_total_radioitem',
-                options = [{'label':i, 'value':i} for i in ['Active Cases', 'Total Cases', 'Recovered']],
+                options = [{'label':i, 'value':i} for i in ['Active Cases', 'Total Cases', 'Recovered Cases']],
                 value = 'Active Cases'),
         ]),
     html.Div(
@@ -140,12 +142,12 @@ app.layout = html.Div([
                     ]),
     ]),
     html.Div([
-        html.A('@Proof of Care Inc', href = 'https://www.proofofcare.com/'),
+        html.A('@Proof of Care Inc', href = 'https://www.proofofcare.com/' ,style = {'color':'#3FE3D1'}),
             html.Div([
                 html.P("Sources from ", style = {'display':'inline'}),
-                html.A("bccdc", href = "http://www.bccdc.ca/health-info/diseases-conditions/covid-19/data",
-                style = {'display':'inline'})])
-    ], style = {'margin-left':'5px', 'float':'right'})
+                html.A("BC Centre for Disease Control", href = "http://www.bccdc.ca/health-info/diseases-conditions/covid-19/data",
+                style = {'display':'inline','color':'#3FE3D1'})])
+    ], style = {'margin-right':'5%', 'float':'right'})
 ])
 
 @app.callback(
@@ -159,9 +161,6 @@ def active_total_graph_render(activeortotal):
         title = (activeortotal + ' Region Distribution in BC')
     )
     return fig
-
-
-
 
 if __name__ =='__main__':
     app.run_server(debug = True)
