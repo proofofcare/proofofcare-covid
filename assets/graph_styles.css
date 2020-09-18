@@ -11,6 +11,11 @@ H1 {
   text-align: center;
 }
 
+.top_container {
+  width:100%;
+  float:left;
+}
+
 .boxes_container {
   float:left;
   width:20%;
@@ -25,7 +30,7 @@ H1 {
 }
 
 .update_box {
-  padding:4% 0 4% 0;
+  padding:5% 0 5% 0;
   margin: 0 0 4% 0;
   text-align: center;
   background-color: white;
@@ -33,14 +38,14 @@ H1 {
 
 .last_update_box {
   padding:5% 0 5% 0;
-  margin: 0 0 0 0;
+  margin:0;
   text-align: center;
   background-color: white;
 }
 
 .daily_cases_container {
   float:left;
-  width:73%;
+  width:71%;
   background-color:white;
 }
 
@@ -66,7 +71,7 @@ H1 {
 
 .active_total_container {
   float:left;
-  width:48%;
+  width:47%;
 }
 
 .active_total_cases {
@@ -74,7 +79,7 @@ H1 {
 }
 
 .sex_age_container {
-    width:48%;
+    width:47%;
     float:left;
 }
 

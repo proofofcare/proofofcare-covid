@@ -86,42 +86,47 @@ app.layout = html.Div([
         html.H1("PROOF of CARE - B.C. COVID -19 Updates",)
     ]),
     html.Div(
-        className ='boxes_container',
+        className = 'top_container',
         children = [
             html.Div(
-                className = "first_update_box",
+                className ='boxes_container',
                 children = [
-                    html.P('Data Updated for: {}' .format(most_recent))
+                    html.Div(
+                        className = "first_update_box",
+                        children = [
+                            html.P('Data Updated for: {}' .format(most_recent))
+                    ]),
+                    html.Div(
+                        className = 'update_box',
+                        children = [
+                            html.P('Active Cases: {}' .format(BC_active_cases))]),
+                    html.Div(
+                        className = 'update_box',
+                        children = [
+                            html.P("Daily Case: {}" .format(daily_covid_cases ))
+                    ]),
+                    html.Div(
+                        className = "update_box",
+                        children = [
+                            html.P("Total Recovered: {}" .format(daily_df['Recovered Cases'].sum()))
+                        ]
+                    ),
+                    html.Div(
+                        className ='last_update_box',
+                        children = [
+                            html.P("Cases for past 7 days: {}" .format(one_week_trend))
+                    ]),
+            ], style = {'font-family':'Lucida Grande', 'font-weight':'bold',
+                'font-size':18,'color':'#7d7d7d'}),
+            html.Div(
+                className = 'daily_cases_container',
+                children = [
+                    dcc.Graph(
+                        className = "daily_cases",
+                        figure = covid_graph),
             ]),
-            html.Div(
-                className = 'update_box',
-                children = [
-                    html.P('Active Cases: {}' .format(BC_active_cases))]),
-            html.Div(
-                className = 'update_box',
-                children = [
-                    html.P("Daily Case: {}" .format(daily_covid_cases ))
-            ]),
-            html.Div(
-                className = "update_box",
-                children = [
-                    html.P("Total Recovered: {}" .format(daily_df['Recovered Cases'].sum()))
-                ]
-            ),
-            html.Div(
-                className ='last_update_box',
-                children = [
-                    html.P("Cases for past 7 days: {}" .format(one_week_trend))
-            ]),
-    ], style = {'font-family':'Lucida Grande', 'font-weight':'bold',
-        'font-size':18,'color':'#7d7d7d'}),
-    html.Div(
-        className = 'daily_cases_container',
-        children = [
-            dcc.Graph(
-                className = "daily_cases",
-                figure = covid_graph),
-    ]),
+        ]
+    ),
     html.Div(
         className = "radioitem_container",
         children = [
