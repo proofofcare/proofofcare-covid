@@ -114,7 +114,7 @@ app.layout = html.Div([
                     html.Div(
                         className ='last_update_box',
                         children = [
-                            html.P("Cases for past 7 days: {}" .format(one_week_trend))
+                            html.P("Cases for Past 7 Days: {}" .format(one_week_trend))
                     ]),
             ], style = {'font-family':'Lucida Grande', 'font-weight':'bold',
                 'font-size':18,'color':'#7d7d7d'}),
