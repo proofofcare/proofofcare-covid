@@ -73,28 +73,28 @@ age_sex_bar.update_layout(
 app.layout = html.Div([
     html.Div([
         html.H1("Proof of Care - B.C. COVID -19 Update", style = {
-            'font-family':'fantasy'
+            'font-family':'Verdana', 'color':'#01AEEF'
         })
     ]),
     html.Div(
         className ='boxes_container',
         children = [
             html.Div(
-                className = "update_boxes",
+                className = "first_update_box",
                 children = [
                     html.P('Data Updated for: {}' .format(most_recent))
             ]),
             html.Div(
-                className = 'update_boxes',
+                className = 'update_box',
                 children = [
                     html.P('Active Cases: {}' .format(BC_active_cases))]),
             html.Div(
-                className = 'update_boxes',
+                className = 'update_box',
                 children = [
                     html.P("Daily Case: {}" .format(daily_covid_cases ))
             ]),
             html.Div(
-                className = "update_boxes",
+                className = "update_box",
                 children = [
                     html.P("Total Recovered: {}" .format(daily_df['Recovered Cases'].sum()))
                 ]
@@ -142,11 +142,11 @@ app.layout = html.Div([
                     ]),
     ]),
     html.Div([
-        html.A('@Proof of Care Inc', href = 'https://www.proofofcare.com/' ,style = {'color':'#3FE3D1'}),
+        html.A('@Proof of Care Inc', href = 'https://www.proofofcare.com/' ,style = {'color':'#01AEEF'}),
             html.Div([
                 html.P("Sources from ", style = {'display':'inline'}),
                 html.A("BC Centre for Disease Control", href = "http://www.bccdc.ca/health-info/diseases-conditions/covid-19/data",
-                style = {'display':'inline','color':'#3FE3D1'})])
+                style = {'display':'inline','color':'#01AEEF'})])
     ], style = {'margin-right':'5%', 'float':'right'})
 ])
 
