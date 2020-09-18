@@ -7,7 +7,6 @@ from flask import Flask
 import plotly.express as px
 from arcgis import GIS
 
-
 import numpy as np
 import pandas as pd
 
@@ -26,8 +25,6 @@ covid_count = df.groupby(by = "Reported Date").count()
 daily_covid_cases = covid_count.iloc[-1][0]
 BC_active_cases = daily_df['Active Cases'].sum()
 one_week_trend = covid_count.Sex.tail(7).sum()
-
-ordered_age_group = ['<10','10-19','20-29','30-39','40-49','50-59','60-69','70-79','80-89','90+','Unknown']
 
 app = dash.Dash(__name__)
 app.config.suppress_callback_exceptions = True
@@ -53,11 +50,25 @@ covid_graph.update_layout(
         title = "New Cases"),
 )
 
+# Age and Sex Graph Queries
+
 z = df.groupby(by = ['Sex','Age_Group']).count()
 
+females = z.loc['F',:]
+females['Age Group'] = females.index
+f = females.copy()
+f.index = [1,2,3,4,5,6,7,8,9,0,10,]
+f.sort_index(inplace = True)
+
+males = z.loc['M',:]
+males['Age Group'] = males.index
+m = males.copy()
+m.index = [1,2,3,4,5,6,7,8,9,0,10,]
+m.sort_index(inplace = True)
+
 age_sex_bar = go.Figure(data = [
-    go.Bar(name = 'M', x = ordered_age_group, y = z.HA, marker = dict(color = '#3D9BE9')),
-    go.Bar(name = 'F', x = ordered_age_group, y = z.HA, marker = dict(color = '#3FE3D1'))
+    go.Bar(name = 'M', x = m['Age Group'], y = m.HA, marker = dict(color = '#3D9BE9')),
+    go.Bar(name = 'F', x = m['Age Group'], y = f.HA, marker = dict(color = '#3FE3D1'))
     ])
 age_sex_bar.update_layout(
     barmode='stack',
@@ -72,9 +83,7 @@ age_sex_bar.update_layout(
 
 app.layout = html.Div([
     html.Div([
-        html.H1("Proof of Care - B.C. COVID -19 Update", style = {
-            'font-family':'Verdana', 'color':'#01AEEF'
-        })
+        html.H1("PROOF of CARE - B.C. COVID -19 Updates",)
     ]),
     html.Div(
         className ='boxes_container',
