@@ -22,7 +22,7 @@ most_recent = df['Reported Date'].iloc[-1]
 
 ## daily count of covid cases
 covid_count = df.groupby(by = "Reported Date").count()
-daily_covid_cases = covid_count.iloc[-1][0]
+previous_covid_cases = covid_count.iloc[-2][0]
 BC_active_cases = daily_df['Active Cases'].sum()
 one_week_trend = covid_count.Sex.tail(7).sum()
 
@@ -30,25 +30,6 @@ app = dash.Dash(__name__)
 app.config.suppress_callback_exceptions = True
 server = app.server
 app.title = "Proof of Care - COVID Dashboard"
-
-covid_graph = go.Figure(
-    go.Scatter(
-        x = pd.to_datetime(covid_count.index).sort_values(), y = covid_count.HA, name = 'Daily Cases', opacity = .8,
-            marker = dict(color='#01AEEF')))
-covid_graph.add_trace(
-    go.Scatter(
-        x = pd.to_datetime(covid_count.index).sort_values(), y = covid_count.HA.rolling(7).mean(), name = '7 Day Average',
-            opacity = 1, marker = dict(color = '#3D9BE9')))
-covid_graph.update_layout(
-    title ="Daily Covid Cases in BC",
-    paper_bgcolor = 'white',
-    plot_bgcolor ='white',
-    xaxis = dict(
-        title = "Time",
-    ),
-    yaxis =dict(
-        title = "New Cases"),
-)
 
 # Age and Sex Graph Queries
 
@@ -103,7 +84,7 @@ app.layout = html.Div([
                     html.Div(
                         className = 'update_box',
                         children = [
-                            html.P("Daily Case: {}" .format(daily_covid_cases ))
+                            html.P("Previous Day Cases: {}" .format(previous_covid_cases ))
                     ]),
                     html.Div(
                         className = "update_box",
@@ -121,12 +102,11 @@ app.layout = html.Div([
             html.Div(
                 className = 'daily_cases_container',
                 children = [
-                    dcc.Graph(
-                        className = "daily_cases",
-                        figure = covid_graph),
+                    html.Button('Daily Cases', id = 'btn-nclicks-1', n_clicks=0, className ='Buttons'),
+                    html.Button('7 Day Average', id = 'btn-nclicks-2', n_clicks=0, className = 'Buttons'),
+                    html.Div(id = 'graphs_container')
             ]),
-        ]
-    ),
+        ]),
     html.Div(
         className = "radioitem_container",
         children = [
@@ -163,6 +143,64 @@ app.layout = html.Div([
                 style = {'display':'inline','color':'#01AEEF'})])
     ], style = {'margin-right':'5%', 'float':'right'})
 ])
+
+@app.callback(
+    Output('graphs_container', 'children'),
+    [Input('btn-nclicks-1', 'n_clicks'),
+    Input('btn-nclicks-2', 'n_clicks')])
+
+def button_output(btn1, btn2):
+    changed_id = [p['prop_id'] for p in dash.callback_context.triggered][0]
+    if 'btn-nclicks-1' in changed_id:
+        covid_graph = go.Figure(
+            go.Scatter(
+                x = pd.to_datetime(covid_count.index).sort_values(), y = covid_count.HA, name = 'Daily Cases', opacity = .8,
+                    marker = dict(color='#01AEEF')))
+        covid_graph.update_layout(
+            title ="Daily Covid Cases in BC",
+            paper_bgcolor = 'white',
+            plot_bgcolor ='white',
+            xaxis = dict(
+                title = "Time",
+            ),
+            yaxis =dict(
+                title = "Cases"),
+        )
+
+    elif 'btn-nclicks-2' in changed_id:
+        covid_graph = go.Figure(
+            go.Scatter(
+                x = pd.to_datetime(covid_count.index).sort_values(), y = covid_count.HA.rolling(7).mean(), name = '7 Day Average',
+                    opacity = 1, marker = dict(color = '#3D9BE9'))
+                    )
+        covid_graph.update_layout(
+            title ="7 Day Covid Trend in BC",
+            paper_bgcolor = 'white',
+            plot_bgcolor ='white',
+            xaxis = dict(
+                title = "Time",
+            ),
+            yaxis =dict(
+                title = "Cases"),
+        )
+    else:
+        covid_graph = go.Figure(
+            go.Scatter(
+                x = pd.to_datetime(covid_count.index).sort_values(), y = covid_count.HA, name = 'Daily Cases', opacity = .8,
+                    marker = dict(color='#01AEEF')))
+        covid_graph.update_layout(
+            title ="Daily Covid Cases in BC",
+            paper_bgcolor = 'white',
+            plot_bgcolor ='white',
+            xaxis = dict(
+                title = "Time",
+            ),
+            yaxis =dict(
+                title = "Cases"),
+        )
+    return html.Div(dcc.Graph(figure = covid_graph))
+
+
 
 @app.callback(
     Output('active_total_graph', 'figure'),

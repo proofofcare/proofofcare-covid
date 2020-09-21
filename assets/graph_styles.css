@@ -23,24 +23,31 @@ H1 {
 }
 
 .first_update_box {
-  padding:5% 0 5% 0;
-  margin: 0 0 4% 0;
+  padding:7% 0 7% 0;
+  margin: 0 0 5% 0;
   text-align: center;
   background-color: white;
 }
 
 .update_box {
-  padding:5% 0 5% 0;
-  margin: 0 0 4% 0;
+  padding:6% 0 6% 0;
+  margin: 0 0 5% 0;
   text-align: center;
   background-color: white;
 }
 
 .last_update_box {
-  padding:5% 0 5% 0;
+  padding:7% 0 7% 0;
   margin:0;
   text-align: center;
   background-color: white;
+}
+
+.Buttons {
+  padding: 2%;
+  background: rgba(1, 174, 239, .4);
+  font-weight: bold;
+  color: white;
 }
 
 .daily_cases_container {
