@@ -30,8 +30,6 @@ laboratory data gives testing data. for things like how many tests, positive tes
 
 
 
-Can try out a donut pie graph
-
 
 
 
