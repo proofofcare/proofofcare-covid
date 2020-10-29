@@ -37,14 +37,16 @@ z = df.groupby(by = ['Sex','Age_Group']).count()
 
 females = z.loc['F',:]
 females['Age Group'] = females.index
+females = females[females.index!='Unknown']
 f = females.copy()
-f.index = [1,2,3,4,5,6,7,8,9,0,10,]
+f.index = [1,2,3,4,5,6,7,8,9,0]
 f.sort_index(inplace = True)
 
 males = z.loc['M',:]
 males['Age Group'] = males.index
+males = males[males.index!='Unknown']
 m = males.copy()
-m.index = [1,2,3,4,5,6,7,8,9,0,10,]
+m.index = [1,2,3,4,5,6,7,8,9,0]
 m.sort_index(inplace = True)
 
 age_sex_bar = go.Figure(data = [
