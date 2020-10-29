@@ -104,7 +104,7 @@ app.layout = html.Div([
             html.Div(
                 className = 'daily_cases_container',
                 children = [
-                    html.Button('Daily Cases', id = 'btn-nclicks-1', n_clicks=0, className ='Buttons'),
+                    html.Button('Daily Cases', id = 'btn-nclicks-1', n_clicks=1, className ='Buttons'),
                     html.Button('7 Day Average', id = 'btn-nclicks-2', n_clicks=0, className = 'Buttons'),
                     html.Div(id = 'graphs_container')
             ]),
